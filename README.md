@@ -16,13 +16,7 @@ Você deve implementar uma API responsável por:
 
 Este repositório já inclui um **boilerplate inicial**, mas você tem liberdade para estruturar, reorganizar ou expandir conforme achar necessário.
 
-## 🎨 Layout (Figma)
-
-Acesse o layout completo:
-
-🔗 [Desafio Suplementar TCC 2025](https://www.figma.com/design/BIueXxPq9QG62vWj8OgOVh/Desafio-Suplementar-TCC-2025?node-id=0-1)
-
-## 🧱 Estrutura do Projeto
+## Estrutura do Projeto
 
 A estrutura base do projeto é dividida em camadas:
 
