@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QuizzOds.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using QuizzOds.Infrastructure.Data;
 namespace QuizzOds.Infrastructure.Migrations
 {
     [DbContext(typeof(QuizzOdsDbContext))]
-    partial class QuizzOdsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251202182244_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace QuizzOds.Domain.Entidades;
+﻿using QuizzOds.Domain.Entidades;
 
 public class Quiz : Entity
 {
-    public string Titulo { get; set; } = null!;
+    public Guid OdsId { get; set; }
+    public Ods Ods { get; set; } = null!;
 
-    public Guid? OdsId { get; set; }
-    public Ods? Ods { get; set; }
-
-    public ICollection<Question> Questions { get; set; } = new List<Question>();
+    public string Pergunta { get; set; } = null!;
+    public string OptionA { get; set; } = null!;
+    public string OptionB { get; set; } = null!;
+    public string OptionC { get; set; } = null!;
+    public string OptionD { get; set; } = null!;
+    public string RespostaCorreta { get; set; } = null!;
 }
