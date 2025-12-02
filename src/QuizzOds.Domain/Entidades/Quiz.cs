@@ -1,4 +1,6 @@
 ﻿using QuizzOds.Domain.Entidades;
+using QuizzOds.Domain.Entities;
+
 
 public class Quiz : Entity
 {

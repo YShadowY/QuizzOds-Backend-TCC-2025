@@ -1,52 +1,36 @@
 using Microsoft.EntityFrameworkCore;
-using QuizzOds.Domain.Entidades;
-
-namespace QuizzOds.Infrastructure.Data;
+using QuizzOds.Domain.Entities;
 
 public class QuizzOdsDbContext : DbContext
 {
+    public DbSet<Ods> Ods { get; set; } = null!;
+    public DbSet<Quiz> Quiz { get; set; } = null!;
+
     public QuizzOdsDbContext(DbContextOptions<QuizzOdsDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<Ods> Ods => Set<Ods>();
-    public DbSet<Quiz> Quizzes => Set<Quiz>();
-    public DbSet<Question> Questions => Set<Question>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Ods>(b =>
+        modelBuilder.Entity<Ods>(builder =>
         {
-            b.HasKey(x => x.Id);
-            b.Property(x => x.Numero).IsRequired();
-            b.Property(x => x.Titulo).IsRequired().HasMaxLength(255);
-            b.Property(x => x.Resumo).IsRequired();
-            b.Property(x => x.Conteudo).IsRequired();
-            b.Property(x => x.RespostaBrasil).IsRequired();
+            builder.ToTable("Ods");
+
+            builder.Property(o => o.Numero).IsRequired();
+            builder.Property(o => o.Titulo).HasMaxLength(255).IsRequired();
+            builder.Property(o => o.Resumo).IsRequired();
+            builder.Property(o => o.Conteudo).IsRequired();
+            builder.Property(o => o.RespostaBrasil).IsRequired();
+            builder.Property(o => o.ImagemUrl).IsRequired();
         });
 
-        modelBuilder.Entity<Quiz>(b =>
+        modelBuilder.Entity<Quiz>(builder =>
         {
-            b.HasKey(x => x.Id);
-            b.Property(x => x.Titulo).IsRequired();
+            builder.ToTable("Quiz");
 
-            b.HasOne(x => x.Ods)
-                .WithMany(o => o.Quizzes)
-                .HasForeignKey(x => x.OdsId)
-                .OnDelete(DeleteBehavior.Restrict);
-        });
-
-        modelBuilder.Entity<Question>(b =>
-        {
-            b.HasKey(x => x.Id);
-            b.Property(x => x.Title).IsRequired().HasMaxLength(255);
-
-            b.HasOne(x => x.Quiz)
-                .WithMany(q => q.Questions)
-                .HasForeignKey(x => x.QuizId);
+            builder.Property(q => q.Pergunta).IsRequired();
+            builder.Property(q => q.RespostaCorreta).IsRequired();
         });
     }
 }
