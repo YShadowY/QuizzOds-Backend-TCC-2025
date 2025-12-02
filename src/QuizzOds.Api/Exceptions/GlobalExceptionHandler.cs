@@ -15,7 +15,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, "Unhandled exception");
+        _logger.LogError(exception, "Erro não tratado na aplicação.");
 
         var details = new ProblemDetails
         {
@@ -26,6 +26,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         };
 
         httpContext.Response.StatusCode = 500;
+        httpContext.Response.ContentType = "application/problem+json";
 
         await httpContext.Response.WriteAsJsonAsync(details, cancellationToken);
 

@@ -20,20 +20,18 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 
-// Exception Handler
+// Exception handler global + ProblemDetails
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
-// Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
