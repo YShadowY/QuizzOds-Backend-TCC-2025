@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using QuizOds.Application;
 using QuizOds.Infrastructure;
-using QuizOds.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"CONN => {conn}");
 
 // 1. Controllers
 
@@ -23,10 +24,17 @@ builder.Services.AddApplication();
 
 
 // 4. Infrastructure Layer (DbContext + Repositories)
-var conn = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine($"CONN => {conn}");
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+if (string.IsNullOrWhiteSpace(conn))
+{
+    Console.WriteLine("❌ DefaultConnection NÃO foi carregada");
+}
+else
+{
+    Console.WriteLine("✅ ConnectionString carregada com sucesso");
+}
 
 
 // 5. CORS
