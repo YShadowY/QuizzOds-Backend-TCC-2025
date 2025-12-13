@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
+using QuizOds.Application.CasosDeUso.OdsQueries.GetPublic;
 
 
 namespace QuizOds.Api.Controllers;
@@ -14,6 +15,14 @@ public class OdsController : ControllerBase
     public OdsController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    // ENDPOINT PÚBLICO
+    [HttpGet("public")]
+    public async Task<IActionResult> GetPublic()
+    {
+        var result = await _mediator.Send(new GetPublicOdsQuery());
+        return Ok(result);
     }
 
     [HttpGet]
