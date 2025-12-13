@@ -1,4 +1,5 @@
 using QuizOds.Domain.Entities;
+namespace QuizOds.Domain.Interfaces;
 
 public interface IQuestionRepository
 {

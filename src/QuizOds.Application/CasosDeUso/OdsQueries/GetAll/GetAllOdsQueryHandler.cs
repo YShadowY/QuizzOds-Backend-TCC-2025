@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
-using QuizOds.Domain.Entities;
+using QuizOds.Application.Dtos.Ods;
+using QuizOds.Application.Dtos.Questions;
 using QuizOds.Domain.Interfaces;
 
 public class GetAllOdsQueryHandler
-    : IRequestHandler<GetAllOdsQuery, IEnumerable<Ods>>
+    : IRequestHandler<GetAllOdsQuery, IEnumerable<OdsDto>>
 {
     private readonly IOdsRepository _repository;
 
@@ -13,10 +14,32 @@ public class GetAllOdsQueryHandler
         _repository = repository;
     }
 
-    public async Task<IEnumerable<Ods>> Handle(
+    public async Task<IEnumerable<OdsDto>> Handle(
         GetAllOdsQuery request,
         CancellationToken cancellationToken)
     {
-        return await _repository.GetAllAsync();
+        var odsList = await _repository.GetAllAsync();
+
+        return odsList.Select(ods => new OdsDto
+        {
+            Id = ods.Id,
+            Numero = ods.Numero,
+            Titulo = ods.Titulo,
+            Resumo = ods.Resumo,
+            Conteudo = ods.Conteudo,
+            ImageUrl = ods.ImageUrl,
+
+            Questions = ods.Questions.Select(q => new QuestionDto
+            {
+                Id = q.Id,
+                Texto = q.Texto,
+                OptionA = q.OptionA,
+                OptionB = q.OptionB,
+                OptionC = q.OptionC,
+                OptionD = q.OptionD,
+                RespostaCorreta = q.RespostaCorreta.ToString()
+            }).ToList()
+
+        }).ToList();
     }
 }

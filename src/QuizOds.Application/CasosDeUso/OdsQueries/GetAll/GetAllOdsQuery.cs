@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using QuizOds.Domain.Entities;
+using QuizOds.Application.Dtos.Ods;
 
 namespace QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
 
-
-public class GetAllOdsQuery : IRequest<IEnumerable<Ods>>
-{
-}
+public record GetAllOdsQuery() : IRequest<IEnumerable<OdsDto>>;
