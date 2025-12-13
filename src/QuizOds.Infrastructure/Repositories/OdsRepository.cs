@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QuizOds.Infrastructure.Data;
 using QuizOds.Domain.Entities;
 using QuizOds.Domain.Interfaces;
+using QuizOds.Infrastructure.Data;
 
 namespace QuizOds.Infrastructure.Repositories;
 
@@ -9,11 +9,20 @@ public class OdsRepository : IOdsRepository
 {
     private readonly QuizOdsDbContext _context;
 
-    public OdsRepository(QuizOdsDbContext context) => _context = context;
+    public OdsRepository(QuizOdsDbContext context)
+    {
+        _context = context;
+    }
 
     public async Task AddAsync(Ods ods)
     {
-        await _context.Ods.AddAsync(ods);
+        _context.Ods.Add(ods);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Ods ods)
+    {
+        _context.Ods.Update(ods);
         await _context.SaveChangesAsync();
     }
 
@@ -24,17 +33,27 @@ public class OdsRepository : IOdsRepository
     }
 
     public async Task<IEnumerable<Ods>> GetAllAsync()
-        => await _context.Ods.Include(o => o.Questions).ToListAsync();
+    {
+        return await _context.Ods
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
+            .ToListAsync();
+    }
 
     public async Task<Ods?> GetByIdAsync(Guid id)
-        => await _context.Ods.Include(o => o.Questions).FirstOrDefaultAsync(o => o.Id == id);
-
-    public async Task<IEnumerable<Ods>> GetByNumeroAsync(int numero)
-        => await _context.Ods.Where(o => o.Numero == numero).ToListAsync();
-
-    public async Task UpdateAsync(Ods ods)
     {
-        _context.Ods.Update(ods);
-        await _context.SaveChangesAsync();
+        return await _context.Ods
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
+            .FirstOrDefaultAsync(o => o.Id == id);
     }
+
+    public async Task<Ods?> GetByNumeroAsync(int numero)
+    {
+        return await _context.Ods
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
+            .FirstOrDefaultAsync(o => o.Numero == numero);
+    }
+
 }

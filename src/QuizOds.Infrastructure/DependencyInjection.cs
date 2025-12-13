@@ -1,32 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using QuizOds.Domain.Interfaces;
 using QuizOds.Infrastructure.Data;
 using QuizOds.Infrastructure.Repositories;
 
-namespace QuizOds.Infrastructure
+namespace QuizOds.Infrastructure;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructure(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+        services.AddDbContext<QuizOdsDbContext>(options =>
+            options.UseMySql(
+                configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(
+                    configuration.GetConnectionString("DefaultConnection")
+                )
+            )
+        );
 
-            if (string.IsNullOrWhiteSpace(connectionString))
-                throw new Exception("❌ ConnectionString 'DefaultConnection' não encontrada no appsettings.json!");
+        // 🔥 REGISTRO DOS REPOSITÓRIOS
+        services.AddScoped<IOdsRepository, OdsRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IQuizRepository, QuizRepository>();
 
-            var serverVersion = new MySqlServerVersion(new Version(8, 0, 36));
-
-            services.AddDbContext<QuizOdsDbContext>(options =>
-                options.UseMySql(connectionString, serverVersion));
-
-            // Registro de repositórios
-            services.AddScoped<IQuestionRepository, QuestionRepository>();
-
-            return services;
-        }
+        return services;
     }
 }

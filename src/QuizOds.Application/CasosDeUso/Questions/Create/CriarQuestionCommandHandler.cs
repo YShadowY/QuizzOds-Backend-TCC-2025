@@ -15,17 +15,19 @@ public class CreateQuestionCommandHandler
         _repository = repository;
     }
 
-    public async Task<Guid> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(
+    CreateQuestionCommand request,
+    CancellationToken cancellationToken)
     {
         var question = new Question
         {
-            OdsId = request.OdsId,
-            QuestionText = request.Question,
+            QuizId = request.QuizId,
+            Texto = request.Texto,
             OptionA = request.OptionA,
             OptionB = request.OptionB,
             OptionC = request.OptionC,
             OptionD = request.OptionD,
-            CorrectAnswer = request.CorrectAnswer
+            RespostaCorreta = request.RespostaCorreta
         };
 
         await _repository.AddAsync(question);

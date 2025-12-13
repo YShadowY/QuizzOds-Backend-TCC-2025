@@ -26,8 +26,7 @@ public class QuizRepository : IQuizRepository
     public async Task<Quiz?> GetByIdAsync(Guid id)
     {
         return await _context.Quiz
-           .Include(q => q.Ods)
-           .FirstOrDefaultAsync(q => q.Id == id);
-
+            .Include(q => q.Questions)
+            .FirstOrDefaultAsync(q => q.Id == id);
     }
 }

@@ -11,9 +11,7 @@ public class Ods : Common.Entity
     public string Resumo { get; set; } = null!;
     public string Conteudo { get; set; } = null!;
     public string RespostaBrasil { get; set; } = null!;
-
-    // Relacionamento
-    public ICollection<Question> Questions { get; set; } = new List<Question>();
     public string? ImageUrl { get; set; }
 
+    public ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
 }
