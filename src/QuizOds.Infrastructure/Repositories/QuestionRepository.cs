@@ -3,8 +3,6 @@ using QuizOds.Domain.Entities;
 using QuizOds.Domain.Interfaces;
 using QuizOds.Infrastructure.Data;
 
-namespace QuizOds.Infrastructure.Repositories;
-
 public class QuestionRepository : IQuestionRepository
 {
     private readonly QuizOdsDbContext _context;
@@ -23,14 +21,13 @@ public class QuestionRepository : IQuestionRepository
     public async Task<Question?> GetByIdAsync(Guid id)
     {
         return await _context.Questions
-            .Include(q => q.Quiz)
             .FirstOrDefaultAsync(q => q.Id == id);
     }
 
-    public async Task<IEnumerable<Question>> GetByQuizIdAsync(Guid quizId)
+    public async Task<IEnumerable<Question>> GetByOdsIdAsync(Guid odsId)
     {
         return await _context.Questions
-            .Where(q => q.QuizId == quizId)
+            .Where(q => q.OdsId == odsId)
             .ToListAsync();
     }
 }

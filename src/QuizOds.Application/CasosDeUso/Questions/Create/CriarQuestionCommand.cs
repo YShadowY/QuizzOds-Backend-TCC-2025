@@ -4,7 +4,6 @@ namespace QuizOds.Application.UseCases.Questions.Create;
 
 public class CreateQuestionCommand : IRequest<Guid>
 {
-    public Guid QuizId { get; set; }
 
     public string Texto { get; set; } = null!;
 

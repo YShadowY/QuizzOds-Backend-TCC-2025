@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
 using QuizOds.Application.Dtos.Ods;
-using QuizOds.Application.Dtos.Questions;
+using QuizOds.Application.Dtos.Question;
 using QuizOds.Domain.Interfaces;
 
 public class GetAllOdsQueryHandler
@@ -37,7 +37,6 @@ public class GetAllOdsQueryHandler
                 OptionB = q.OptionB,
                 OptionC = q.OptionC,
                 OptionD = q.OptionD,
-                RespostaCorreta = q.RespostaCorreta.ToString()
             }).ToList()
 
         }).ToList();

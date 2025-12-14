@@ -1,4 +1,4 @@
-﻿using QuizOds.Application.Dtos.Questions;
+﻿using QuizOds.Application.Dtos.Question;
 
 namespace QuizOds.Application.Dtos.Ods;
 

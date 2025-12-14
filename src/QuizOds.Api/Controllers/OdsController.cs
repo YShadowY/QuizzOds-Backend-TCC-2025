@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
 using QuizOds.Application.CasosDeUso.OdsQueries.GetPublic;
+using QuizOds.Application.CasosDeUso.QuizQueries.GetQuizByOds;
+
 
 
 namespace QuizOds.Api.Controllers;
@@ -23,7 +25,15 @@ public class OdsController : ControllerBase
     {
         var result = await _mediator.Send(new GetPublicOdsQuery());
         return Ok(result);
+
     }
+    [HttpGet("{numero:int}/quiz")]
+    public async Task<IActionResult> GetQuizByOds(int numero)
+    {
+        var quiz = await _mediator.Send(new GetQuizByOdsQuery(numero));
+        return Ok(quiz);
+    }
+
 
     [HttpGet]
     public async Task<IActionResult> GetAll()

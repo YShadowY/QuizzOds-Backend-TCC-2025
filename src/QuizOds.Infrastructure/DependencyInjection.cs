@@ -25,7 +25,7 @@ public static class DependencyInjection
         // 🔥 REGISTRO DOS REPOSITÓRIOS
         services.AddScoped<IOdsRepository, OdsRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
-        services.AddScoped<IQuizRepository, QuizRepository>();
+        
 
         return services;
     }

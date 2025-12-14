@@ -1,8 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QuizOds.Application;
+using QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
 using QuizOds.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(GetAllOdsQuery).Assembly)
+);
 
 var conn = builder.Configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine($"CONN => {conn}");

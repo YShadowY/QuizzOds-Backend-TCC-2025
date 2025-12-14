@@ -13,7 +13,7 @@ public class Ods : Common.Entity
     public string RespostaBrasil { get; set; } = null!;
     public string? ImageUrl { get; set; }
 
-    public ICollection<Quiz> Quizzes { get; set; } = new List<Quiz>();
+
     public ICollection<Question> Questions { get; set; } = new List<Question>();
 
 }

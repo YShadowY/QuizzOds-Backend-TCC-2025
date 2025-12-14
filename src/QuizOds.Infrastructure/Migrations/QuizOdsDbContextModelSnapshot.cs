@@ -19,52 +19,6 @@ namespace QuizOds.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Quiz", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("OdsId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("OptionA")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("OptionB")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("OptionC")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("OptionD")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Pergunta")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("RespostaCorreta")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OdsId");
-
-                    b.ToTable("Quiz");
-                });
-
             modelBuilder.Entity("QuizOds.Domain.Entities.Ods", b =>
                 {
                     b.Property<Guid>("Id")
@@ -107,10 +61,6 @@ namespace QuizOds.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("CorrectAnswer")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -133,7 +83,11 @@ namespace QuizOds.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("QuestionText")
+                    b.Property<string>("RespostaCorreta")
+                        .IsRequired()
+                        .HasColumnType("varchar(1)");
+
+                    b.Property<string>("Texto")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -145,17 +99,6 @@ namespace QuizOds.Infrastructure.Migrations
                     b.HasIndex("OdsId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Quiz", b =>
-                {
-                    b.HasOne("QuizOds.Domain.Entities.Ods", "Ods")
-                        .WithMany()
-                        .HasForeignKey("OdsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ods");
                 });
 
             modelBuilder.Entity("QuizOds.Domain.Entities.Question", b =>

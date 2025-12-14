@@ -21,7 +21,7 @@ public class CreateQuestionCommandHandler
     {
         var question = new Question
         {
-            QuizId = request.QuizId,
+        
             Texto = request.Texto,
             OptionA = request.OptionA,
             OptionB = request.OptionB,

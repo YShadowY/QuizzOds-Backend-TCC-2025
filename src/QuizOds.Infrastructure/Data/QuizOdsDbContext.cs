@@ -11,7 +11,6 @@ namespace QuizOds.Infrastructure.Data
         }
 
         public DbSet<Ods> Ods => Set<Ods>();
-        public DbSet<Quiz> Quiz => Set<Quiz>();
         public DbSet<Question> Questions => Set<Question>();
 
     }
