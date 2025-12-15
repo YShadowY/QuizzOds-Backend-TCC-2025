@@ -1,32 +1,32 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using QuizOds.Application.UseCases.Questions.Create;
+using QuizOds.Application.CasosDeUso.Questions.SubmitAnswer;
+using QuizOds.Application.Dtos.Question;
 
-namespace QuizOds.Api.Controllers
+namespace QuizOds.Api.Controllers;
+
+[ApiController]
+[Route("api/questions")]
+public class QuestionsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class QuestionController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public QuestionsController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
+        _mediator = mediator;
+    }
 
-        public QuestionController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+    [HttpPost("answer")]
+    public async Task<IActionResult> SubmitAnswer(
+        [FromBody] SubmitAnswerDto dto)
+    {
+        var result = await _mediator.Send(
+            new SubmitAnswerCommand(
+                dto.QuestionId,
+                dto.SelectedOption
+            )
+        );
 
-        /// <summary>
-        /// Create a new Question
-        /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return Ok(new
-            {
-                Id = result,
-                Message = "Question created successfully."
-            });
-        }
+        return Ok(result);
     }
 }

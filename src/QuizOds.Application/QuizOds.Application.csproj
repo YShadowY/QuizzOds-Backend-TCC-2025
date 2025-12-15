@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QuizOds.Domain\QuizOds.Domain.csproj" />
+    <ProjectReference Include="..\QuizOds.Infrastructure\QuizOds.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
