@@ -35,21 +35,25 @@ public class OdsRepository : IOdsRepository
     public async Task<IEnumerable<Ods>> GetAllAsync()
     {
         return await _context.Ods
-            .Include(o => o.Questions)
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
             .ToListAsync();
     }
+
 
     public async Task<Ods?> GetByIdAsync(Guid id)
     {
         return await _context.Ods
-            .Include(o => o.Questions)
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
             .FirstOrDefaultAsync(o => o.Id == id);
     }
 
     public async Task<Ods?> GetByNumeroAsync(int numero)
     {
         return await _context.Ods
-            .Include(o => o.Questions)
+            .Include(o => o.Quizzes)
+                .ThenInclude(q => q.Questions)
             .FirstOrDefaultAsync(o => o.Numero == numero);
     }
 }

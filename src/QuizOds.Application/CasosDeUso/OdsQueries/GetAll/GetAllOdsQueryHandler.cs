@@ -4,6 +4,8 @@ using QuizOds.Application.Dtos.Ods;
 using QuizOds.Application.Dtos.Question;
 using QuizOds.Domain.Interfaces;
 
+namespace QuizOds.Application.CasosDeUso.OdsQueries.GetAll;
+
 public class GetAllOdsQueryHandler
     : IRequestHandler<GetAllOdsQuery, IEnumerable<OdsDto>>
 {
@@ -29,16 +31,18 @@ public class GetAllOdsQueryHandler
             Conteudo = ods.Conteudo,
             ImageUrl = ods.ImageUrl,
 
-            Questions = ods.Questions.Select(q => new QuestionDto
-            {
-                Id = q.Id,
-                Texto = q.Texto,
-                OptionA = q.OptionA,
-                OptionB = q.OptionB,
-                OptionC = q.OptionC,
-                OptionD = q.OptionD,
-            }).ToList()
-
-        }).ToList();
+            Questions = ods.Quizzes
+                .SelectMany(qz => qz.Questions)
+                .Select(q => new QuestionDto
+                {
+                    Id = q.Id,
+                    Texto = q.Texto,
+                    OptionA = q.OptionA,
+                    OptionB = q.OptionB,
+                    OptionC = q.OptionC,
+                    OptionD = q.OptionD
+                })
+                .ToList()
+        });
     }
 }

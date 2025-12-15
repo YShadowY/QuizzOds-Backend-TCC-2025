@@ -21,25 +21,26 @@ public class GetQuizByOdsQueryHandler
     {
         var ods = await _repository.GetByNumeroAsync(request.Numero);
 
-        if (ods == null)
+        if (ods is null)
             throw new Exception("ODS não encontrada");
 
         return new QuizDto
         {
             OdsNumero = ods.Numero,
-            Titulo = ods.Titulo, // OK → vem da tabela ODS
+            Titulo = ods.Titulo,
 
-            Questions = ods.Questions.Select(q => new QuestionDto
-            {
-                Id = q.Id,
-                Texto = q.Texto,
-                OptionA = q.OptionA,
-                OptionB = q.OptionB,
-                OptionC = q.OptionC,
-                OptionD = q.OptionD
-            }).ToList()
+            Questions = ods.Quizzes
+                .SelectMany(quiz => quiz.Questions)
+                .Select(question => new QuestionDto
+                {
+                    Id = question.Id,
+                    Texto = question.Texto,
+                    OptionA = question.OptionA,
+                    OptionB = question.OptionB,
+                    OptionC = question.OptionC,
+                    OptionD = question.OptionD
+                })
+                .ToList()
         };
-
-
     }
 }

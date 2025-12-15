@@ -30,15 +30,18 @@ public class GetPublicOdsQueryHandler
             Conteudo = ods.Conteudo,
             ImageUrl = ods.ImageUrl,
 
-            Questions = ods.Questions.Select(q => new QuestionPublicDto
-            {
-                Id = q.Id,
-                Texto = q.Texto,
-                OptionA = q.OptionA,
-                OptionB = q.OptionB,
-                OptionC = q.OptionC,
-                OptionD = q.OptionD
-            }).ToList()
+            Questions = ods.Quizzes
+                .SelectMany(qz => qz.Questions)
+                .Select(q => new QuestionPublicDto
+                {
+                    Id = q.Id,
+                    Texto = q.Texto,
+                    OptionA = q.OptionA,
+                    OptionB = q.OptionB,
+                    OptionC = q.OptionC,
+                    OptionD = q.OptionD
+                })
+                .ToList()
         });
     }
 }

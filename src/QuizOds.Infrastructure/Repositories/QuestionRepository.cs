@@ -27,7 +27,9 @@ public class QuestionRepository : IQuestionRepository
     public async Task<IEnumerable<Question>> GetByOdsIdAsync(Guid odsId)
     {
         return await _context.Questions
-            .Where(q => q.OdsId == odsId)
+            .Include(q => q.Quiz)
+            .Where(q => q.Quiz.OdsId == odsId)
             .ToListAsync();
     }
+
 }
