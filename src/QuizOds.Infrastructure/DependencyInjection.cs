@@ -22,7 +22,7 @@ public static class DependencyInjection
             )
         );
 
-        // 🔥 REGISTRO DOS REPOSITÓRIOS
+        //  REGISTRO DOS REPOSITÓRIOS
         services.AddScoped<IOdsRepository, OdsRepository>();
         services.AddScoped<IQuestionRepository, QuestionRepository>();
         
