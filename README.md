@@ -16,119 +16,79 @@ Você deve implementar uma API responsável por:
 
 Este repositório já inclui um **boilerplate inicial**, mas você tem liberdade para estruturar, reorganizar ou expandir conforme achar necessário.
 
-## Estrutura do Projeto
+## Arquitetura do Projeto
 
-A estrutura base do projeto é dividida em camadas:
+src/
+├── QuizOds.Api            → Camada de apresentação (Controllers)
+├── QuizOds.Application    → Casos de uso, Queries, Commands e DTOs
+├── QuizOds.Domain         → Entidades e regras de domínio
+├── QuizOds.Infrastructure → Banco de dados, DbContext e Seed
 
-```shell
-Domain/            → Entidades e regras básicas
-Infrastructure/    → DbContext, configurações do EF Core e repositórios
-Application/       → Casos de uso (MediatR)
-Api/               → Controllers e Program.cs
-```
 
-Você pode manter esse padrão ou expandir — desde que o projeto permaneça claro e organizado.
+## Tecnologias Utilizadas
 
-## O que deve ser implementado
+.NET 8 (ASP.NET Core Web API)
 
-Sua API deverá atender às seguintes necessidades do front-end:
+Entity Framework Core
 
-### **1. ODS**
+MySQL (Aiven – banco gerenciado)
 
-* Listar todas as ODS
-* Retornar detalhes e conteúdo de uma ODS específica
+Docker
 
-### **2. Quiz**
+MediatR (CQRS)
 
-* Listar quizzes disponíveis
-* Retornar perguntas e opções
-* Enviar resposta e retornar feedback
+Swagger / OpenAPI
 
-## Integração com o Front-end
+Render (Deploy)
 
-Você e sua dupla são responsáveis por definir:
+## Funcionalidades implementadas
 
-* Estrutura final das entidades
-* Formato das respostas da API
-* Rotas e payloads
-* Fluxo entre as telas
-* Quais endpoints existirão
+Funcionalidades Implementadas
+
+✔ Listagem de ODS
+
+✔ Consulta de ODS por número
+
+✔ Quiz associado a cada ODS
+
+✔ Perguntas de múltipla escolha
+
+✔ Submissão de respostas do usuário
+
+✔ Validação de resposta correta/incorreta
+
+✔ Seed automático de dados no banco
+
+✔ Documentação via Swagger
+
+## URL da API
+
+https://quizzods-backend-tcc-2025.onrender.com Obs:A aplicação é uma API REST, portanto não possui página inicial (/).
+
+## Swagger (documentação interativa)
+
+https://quizzods-backend-tcc-2025.onrender.com/swagger
+
+## Principais Endpoints
+
+Principais Endpoints
+ Listar todas as ODS
+GET /api/ods
+
+ Buscar ODS por número
+GET /api/ods/{numero}
+
+ Buscar quiz de uma ODS
+GET /api/ods/{numero}/quiz
+
+ Submeter resposta de uma pergunta
+POST /api/questions/answer
 
 ## Banco de Dados
 
-Você deve criar o modelo do banco conforme o que seu app exigir.
+Banco MySQL hospedado no Aiven
 
-O repositório permite trabalhar com MySQL, mas você pode usar:
+Conexão configurada via variáveis de ambiente
 
-* MySQL local (XAMPP, WAMP, Docker)
-* PlanetScale
-* Aiven (plano gratuito)
+Seed automático executado na inicialização da aplicação
 
-A estrutura do banco deve ser criada via **migrations do EF Core**.
-
-## Como rodar o projeto
-
-1. Faça um fork deste repositório
-
-2. Clone o repositório da **sua conta**:
-
-   ```shell
-   git clone https://github.com/estartandodevs-course/QuizzOds-Backend-TCC-2025.git
-   ```
-
-3. Configure a connection string no `appsettings.json`
-
-4. Instale as dependências:
-
-   ```shell
-   dotnet restore
-   ```
-
-5. Atualize o banco:
-
-   ```shell
-   dotnet ef database update -p ./QuizzOds.Api
-   ```
-
-6. Execute a API:
-
-   ```shell
-   dotnet run --project ./QuizzOds.Api
-   ```
-
-7. Acesse o Swagger:
-
-   ```shell
-   http://localhost:5278/swagger
-   ```
-
-## Entrega
-
-Sua entrega deve conter:
-
-* Repositório público no GitHub (seu fork)
-* API funcional
-* Publicação da API em um serviço gratuito (Render, Fly.io, Azure Student etc.) — inclua o link no README
-* Código organizado e em camadas
-* Migrations versionadas
-* Integração real com o front-end da sua dupla
-* README atualizado
-* Histórico de commits legível
-
-## Critérios de Avaliação
-
-* Organização do projeto
-* Clareza e separação das camadas
-* Estrutura dos casos de uso
-* Integração com o front-end
-* Qualidade das rotas e respostas
-* Boas práticas com Entity Framework e MediatR
-* Histórico de commits
-* Comunicação com a dupla
-
-## Observações
-
-* Total liberdade para evoluir a arquitetura
-* Você define o banco, as entidades e as relações
-* Pode incluir bibliotecas úteis (ex: FluentValidation)
-* O foco é entregar uma API limpa, funcional e bem estruturada
